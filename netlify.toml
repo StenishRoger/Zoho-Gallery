@@ -1,0 +1,9 @@
+[build]
+  publish = "."
+
+# Headers for proper MIME types and caching
+[[headers]]
+  for = "/gallery.json"
+  [headers.values]
+    Content-Type = "application/json"
+    Cache-Control = "public, max-age=0, must-revalidate"
