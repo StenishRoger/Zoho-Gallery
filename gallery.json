@@ -1,0 +1,370 @@
+{
+    "baseUrl": "https://prezohoweb.zoho.com/",
+    "images": [
+        {
+            "src": "/sites/zweb/images/analytics/bi-fabric-2.jpg",
+            "title": "BI fabric 2",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/zafn-custom-connectors.png",
+            "title": "Custom Connectors",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/files-and-feeds.png",
+            "title": "Files and Feeds",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/business-apps.png",
+            "title": "Business Apps",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/databases-datalake.png",
+            "title": "Databases and Data Lake",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/databases-datalake.mp4",
+            "title": "Databases and Data Lake Video",
+            "type": "video"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/visual-dataprep-pipeline.mp4",
+            "title": "Visual Dataprep Pipeline Video",
+            "type": "video"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/zafn-dataprep-studio.webp",
+            "title": "Dataprep Studio",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/visual-dataprep-pipeline.webp",
+            "title": "Visual Dataprep Pipeline",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/zafn-metrics-layer.webp",
+            "title": "Metrics Layer",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/50-plus-visualization.mp4",
+            "title": "50 Plus Visualization Video",
+            "type": "video"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/50-plus-visualization.png",
+            "title": "50 Plus Visualization",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/drag-and-drop-visualization.jpg",
+            "title": "Drag and Drop Visualization",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/executive-dashboard.jpg",
+            "title": "Executive Dashboard",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/geo-visualizatio.png",
+            "title": "Geo Visualization",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/dynamic-interactive.png",
+            "title": "Dynamic Interactive",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/zaf-conversational-analytics.webp",
+            "title": "Conversational Analytics",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/zaf-zia-insights.webp",
+            "title": "ZIA Insights",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/diagnostic_insights.png",
+            "title": "Diagnostic Insights",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/zafn-auto-analysis.webp",
+            "title": "Auto Analysis",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/multivariate-forecasting.png",
+            "title": "Multivariate Forecasting",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/anomaly-detection-new.jpg",
+            "title": "Anomaly Detection",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/clustering-new.jpg",
+            "title": "Clustering",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/what-if-analysis.jpg",
+            "title": "What If Analysis",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/data-alerts.jpg",
+            "title": "Data Alerts",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/auto-ml.png",
+            "title": "Auto ML",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/dsml-studio.png",
+            "title": "DSML Studio",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/zaf-uba-easy-connectors.webp",
+            "title": "UBA Easy Connectors",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/prebuilt-analytics.jpeg",
+            "title": "Prebuilt Analytics",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/smart-data-blending.jpeg",
+            "title": "Smart Data Blending",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/zafn-collaboration.webp",
+            "title": "Collaboration",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/zaf-fine-grained-access-control.webp",
+            "title": "Fine Grained Access Control",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/zaf-publishing-embedding.webp",
+            "title": "Publishing and Embedding",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/zafn-collaboration-tools.webp",
+            "title": "Collaboration Tools",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/slideshows.png",
+            "title": "Slideshows",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/web-portals.png",
+            "title": "Web Portals",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/embed-ask-zia.png",
+            "title": "Embed Ask ZIA",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/zaf-embedded-analytics.webp",
+            "title": "Embedded Analytics",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/zafn-self-service-analytics-portal.webp",
+            "title": "Self Service Analytics Portal",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/cloud.jpeg",
+            "title": "Cloud",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/onpremise.png",
+            "title": "On Premise",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/public-private.jpeg",
+            "title": "Public Private",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/embedded.jpeg",
+            "title": "Embedded",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/zaf-dashboard-app.webp",
+            "title": "Dashboard App",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/analytics-on-the-move.webp",
+            "title": "Analytics On The Move",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/data-security.png",
+            "title": "Data Security",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/roles.png",
+            "title": "Roles",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/data-backup.png",
+            "title": "Data Backup",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/logging.png",
+            "title": "Logging",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/zaf-ext-apis.webp",
+            "title": "External APIs",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/zaf-ext-marketplace.webp",
+            "title": "External Marketplace",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/zaf-ext-marketplace.webp",
+            "title": "External Marketplace",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/za-smart-model.png",
+            "title": "Smart Model",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/za-data-distributed.png",
+            "title": "Data Distributed",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/za-transform-data.png",
+            "title": "Transform Data",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/za-enrich-data.png",
+            "title": "Enrich Data",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/team-and-collaborate.png",
+            "title": "Team and Collaborate",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/za-customer-experience-dashboard.webp",
+            "title": "Customer Experience Dashboard",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/za-executive-dasboard-kpi.png",
+            "title": "Executive Dashboard KPI",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/za_website_performace.png",
+            "title": "Website Performance",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/za-zia-question.png",
+            "title": "ZIA Question",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/za-ai-insights.png",
+            "title": "AI Insights",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/za-smarter-decisions.png",
+            "title": "Smarter Decisions",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/za-zia-explain.png",
+            "title": "ZIA Explain",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/za-automatically.png",
+            "title": "Auto Visualization",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/za-predictive-ai-analysis.png",
+            "title": "Predictive AI Analysis",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/za-dsml-studio-overview-video.mp4",
+            "title": "DSML Studio Overview Video",
+            "type": "video"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/zafn-collaboration-version2.webp ",
+            "title": "ZAFN Collaboration Version 2",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/zaf-fine-grained-access-control-version2.webp ",
+            "title": "Fine Grained Access Control Version 2",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/za-collaboration-tools-illustration.webp ",
+            "title": "Collaboration Tools Illustration",
+            "type": "illustration"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/za-perfect-visualizations.webp",
+            "title": "Perfect Visualizations",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/feature/za-pii-encryption.webp",
+            "title": "PII Encryption",
+            "type": "screenshot"
+        },
+        {
+            "src": "/sites/zweb/images/analytics/zaimages/flow.jpg",
+            "title": "Flow",
+            "type": "screenshot"
+        }
+    ]
+}

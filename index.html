@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoho Analytics Gallery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Ambient background blobs -->
+    <div class="bg-decoration">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Top Navigation Bar -->
+        <nav class="top-bar">
+            <!-- Admin button — top-right corner -->
+            <button class="admin-toggle-btn" id="adminToggleBtn" aria-label="Toggle admin mode">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                <span id="adminToggleText">Admin</span>
+            </button>
+
+            <h1 class="header-title">Zoho Analytics Assets</h1>
+            <div class="top-bar-inner">
+                <div class="search-container">
+                    <div class="search-wrapper">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        <input type="text" id="searchBar" class="search-bar" placeholder="Search assets...">
+                        <button class="clear-search-btn" id="clearSearchBtn" aria-label="Clear search">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                <path d="M18 6 6 18M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <button class="upload-trigger-btn" id="uploadTriggerBtn" aria-label="Add new asset">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <line x1="12" y1="5" x2="12" y2="19"/>
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                    </svg>
+                    Add Asset
+                </button>
+            </div>
+        </nav>
+
+        <!-- Filter Tabs -->
+        <div class="controls">
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="all">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                        <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+                    </svg>
+                    All
+                </button>
+                <button class="filter-tab" data-filter="illustration">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+                    </svg>
+                    Illustrations
+                </button>
+                <button class="filter-tab" data-filter="screenshot">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/>
+                        <line x1="12" y1="17" x2="12" y2="21"/>
+                    </svg>
+                    Screenshots
+                </button>
+                <button class="filter-tab" data-filter="video">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
+                    Videos
+                </button>
+            </div>
+        </div>
+
+        <!-- Gallery Grid -->
+        <main class="gallery-container">
+            <div id="imageGallery" class="gallery">
+                <!-- Images will be loaded here dynamically -->
+            </div>
+        </main>
+        
+        <!-- Template card structure -->
+        <template id="imageCardTemplate">
+            <div class="image-card">
+                <div class="image-wrapper">
+                    <img src="" alt="" loading="lazy">
+                    <div class="card-overlay">
+                        <button class="preview-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                            Preview
+                        </button>
+                    </div>
+                    <button class="delete-btn" aria-label="Delete asset" title="Delete">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                            <line x1="10" y1="11" x2="10" y2="17"/>
+                            <line x1="14" y1="11" x2="14" y2="17"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="card-content">
+                    <h3></h3>
+                    <button class="copy-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                            <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                        </svg>
+                        Copy URL
+                    </button>
+                </div>
+            </div>
+        </template>
+    </div>
+    
+    <!-- Upload Modal -->
+    <div id="uploadModal" class="modal upload-modal">
+        <div class="modal-backdrop"></div>
+        <button class="close-btn upload-close-btn" aria-label="Close upload">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                <path d="M18 6 6 18M6 6l12 12"/>
+            </svg>
+        </button>
+        <div class="modal-content upload-modal-content">
+            <h3 class="modal-title upload-modal-title">Add New Asset</h3>
+            <form id="uploadForm" class="upload-form">
+                <div class="form-group">
+                    <label for="uploadSrc">Image / Video URL Path</label>
+                    <input type="text" id="uploadSrc" placeholder="/sites/zweb/images/analytics/..." required>
+                    <span class="form-hint">Path relative to base URL (e.g. /sites/zweb/images/...)</span>
+                </div>
+                <div class="form-group">
+                    <label for="uploadTitle">Title</label>
+                    <input type="text" id="uploadTitle" placeholder="Enter a descriptive title..." required>
+                </div>
+                <div class="form-group">
+                    <label for="uploadType">Type</label>
+                    <div class="type-selector">
+                        <button type="button" class="type-option" data-type="screenshot">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                                <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/>
+                                <line x1="12" y1="17" x2="12" y2="21"/>
+                            </svg>
+                            Screenshot
+                        </button>
+                        <button type="button" class="type-option" data-type="illustration">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+                            </svg>
+                            Illustration
+                        </button>
+                        <button type="button" class="type-option" data-type="video">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                            Video
+                        </button>
+                    </div>
+                    <input type="hidden" id="uploadTypeValue" required>
+                </div>
+                <div id="uploadPreviewContainer" class="upload-preview-container hidden">
+                    <label>Preview</label>
+                    <div class="upload-preview-box">
+                        <img id="uploadPreviewImg" src="" alt="Preview" class="hidden">
+                        <video id="uploadPreviewVid" src="" muted autoplay loop playsinline class="hidden"></video>
+                        <p id="uploadPreviewPlaceholder" class="hidden">Could not load preview</p>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" id="uploadCancelBtn">Cancel</button>
+                    <button type="submit" class="submit-btn" id="uploadSubmitBtn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                            <path d="M12 5v14M5 12h14"/>
+                        </svg>
+                        Add to Gallery
+                    </button>
+                </div>
+                <p id="uploadStatus" class="upload-status hidden"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal/Lightbox -->
+    <div id="imageModal" class="modal">
+        <div class="modal-backdrop"></div>
+        <button class="close-btn" aria-label="Close modal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                <path d="M18 6 6 18M6 6l12 12"/>
+            </svg>
+        </button>
+        <div class="modal-content">
+            <h3 id="modalTitle" class="modal-title"></h3>
+            <img id="modalImage" src="" alt="">
+            <button class="copy-btn modal-copy-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                    <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+                Copy URL
+            </button>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteConfirmModal" class="modal delete-confirm-modal">
+        <div class="modal-backdrop"></div>
+        <div class="delete-modal-card">
+            <div class="delete-modal-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="32" height="32">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="7" x2="12" y2="13" />
+                    <circle cx="12" cy="17" r="1" />
+                </svg>
+            </div>
+            <h2 class="delete-modal-title">Delete asset?</h2>
+            <p class="delete-modal-message">
+                Are you sure you want to delete <span id="deleteItemTitle">this asset</span>? This action cannot be undone.
+            </p>
+            <div class="delete-modal-actions">
+                <button type="button" class="cancel-btn delete-cancel-btn" id="deleteCancelBtn">
+                    Cancel
+                </button>
+                <button type="button" class="delete-confirm-btn" id="deleteConfirmBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <polyline points="3 6 5 6 21 6" />
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                        <line x1="10" y1="11" x2="10" y2="17" />
+                        <line x1="14" y1="11" x2="14" y2="17" />
+                    </svg>
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="modal admin-login-modal">
+        <div class="modal-backdrop"></div>
+        <div class="admin-login-card">
+            <button class="admin-login-close" id="adminLoginClose" aria-label="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                    <path d="M18 6 6 18M6 6l12 12"/>
+                </svg>
+            </button>
+            <div class="admin-login-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="36" height="36">
+                    <path d="M12 15v2"/>
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+            </div>
+            <h2 class="admin-login-title">Admin Access</h2>
+            <p class="admin-login-subtitle">Enter the admin password to enable delete functionality</p>
+            <form id="adminLoginForm" class="admin-login-form">
+                <div class="admin-input-group">
+                    <svg class="admin-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                    <input type="password" id="adminPasswordInput" class="admin-password-input" placeholder="Enter password..." autocomplete="off" required>
+                    <button type="button" class="admin-eye-btn" id="adminEyeBtn" aria-label="Toggle password visibility">
+                        <svg id="eyeOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                        <svg id="eyeClosed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" class="hidden">
+                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                            <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                            <line x1="1" y1="1" x2="23" y2="23"/>
+                        </svg>
+                    </button>
+                </div>
+                <p id="adminLoginError" class="admin-login-error hidden">Incorrect password. Please try again.</p>
+                <button type="submit" class="admin-login-submit" id="adminLoginSubmit">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                        <polyline points="10 17 15 12 10 7"/>
+                        <line x1="15" y1="12" x2="3" y2="12"/>
+                    </svg>
+                    Unlock Admin Mode
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
