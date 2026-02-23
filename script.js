@@ -25,6 +25,16 @@ const DEBOUNCE_DELAY = 150;
 const ANIMATION_DELAY_STEP = 0.04;
 const MAX_STAGGERED_CARDS = 12;  // only stagger first N cards; rest appear instantly
 
+// API base URL (for Netlify / external backend hosting)
+// - When running locally with `node server.js`, keep this empty string.
+// - When hosting the backend separately (Render/Railway/etc), set
+//   `window.GALLERY_API_BASE_URL` in index.html to that backend's URL.
+const API_BASE_URL = (typeof window !== 'undefined' && window.GALLERY_API_BASE_URL) || '';
+
+function apiUrl(path) {
+    return `${API_BASE_URL}${path}`;
+}
+
 // ============================================================================
 // UTILITY FUNCTIONS
 // ============================================================================
@@ -80,7 +90,7 @@ const dataManager = {
 
     // Add a new item via server API (persists to gallery.json)
     async addItem(item) {
-        const response = await fetch('/api/gallery', {
+        const response = await fetch(apiUrl('/api/gallery'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(item)
@@ -96,7 +106,7 @@ const dataManager = {
 
     // Delete an item via server API (removes from gallery.json)
     async deleteItem(src) {
-        const response = await fetch('/api/gallery', {
+        const response = await fetch(apiUrl('/api/gallery'), {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ src })
@@ -116,7 +126,7 @@ const dataManager = {
         if (!gallery) return;
 
         try {
-            const response = await fetch('/api/gallery');
+            const response = await fetch(apiUrl('/api/gallery'));
             if (!response.ok) {
                 throw new Error(`Failed to load gallery: ${response.status}`);
             }
@@ -551,7 +561,7 @@ const adminManager = {
         this.elements.errorMsg?.classList.add('hidden');
 
         try {
-            const response = await fetch('/api/admin/verify', {
+            const response = await fetch(apiUrl('/api/admin/verify'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ password })
