@@ -97,13 +97,8 @@ const dataManager = {
         });
 
         if (!response.ok) {
-            let errMsg = 'Failed to add item';
-            try { const err = await response.json(); errMsg = err.error || errMsg; } catch {}
-            // Detect static hosting (no backend)
-            if (response.status === 404 || response.status === 405) {
-                throw new Error('Add/delete requires the Node.js server (node server.js). This feature is not available on static hosting.');
-            }
-            throw new Error(errMsg);
+            const err = await response.json();
+            throw new Error(err.error || 'Failed to add item');
         }
 
         return response.json();
@@ -118,44 +113,24 @@ const dataManager = {
         });
 
         if (!response.ok) {
-            let errMsg = 'Failed to delete item';
-            try { const err = await response.json(); errMsg = err.error || errMsg; } catch {}
-            if (response.status === 404 || response.status === 405) {
-                throw new Error('Add/delete requires the Node.js server (node server.js). This feature is not available on static hosting.');
-            }
-            throw new Error(errMsg);
+            const err = await response.json();
+            throw new Error(err.error || 'Failed to delete item');
         }
 
         return response.json();
     },
 
-    // Load gallery data — tries the server API first, falls back to static gallery.json
-    // (the fallback makes this work on static hosts like Netlify)
+    // Load gallery from server API (reads gallery.json)
     async loadGallery() {
         const gallery = dom.gallery;
         if (!gallery) return;
 
         try {
-            let data;
-
-            // Try server API first (works when running `node server.js`)
-            if (API_BASE_URL) {
-                const response = await fetch(apiUrl('/api/gallery'));
-                if (!response.ok) throw new Error(`API responded ${response.status}`);
-                data = await response.json();
-            } else {
-                // Try API, but fall back to static file for Netlify / static hosts
-                try {
-                    const response = await fetch('/api/gallery');
-                    if (!response.ok) throw new Error(`API responded ${response.status}`);
-                    data = await response.json();
-                } catch {
-                    // Fallback: load gallery.json directly (static hosting)
-                    const response = await fetch('gallery.json');
-                    if (!response.ok) throw new Error(`Failed to load gallery.json: ${response.status}`);
-                    data = await response.json();
-                }
+            const response = await fetch(apiUrl('/api/gallery'));
+            if (!response.ok) {
+                throw new Error(`Failed to load gallery: ${response.status}`);
             }
+            const data = await response.json();
 
             state.baseUrl = data.baseUrl;
             state.allItems = this.deduplicateItems(data.images || []);
@@ -164,7 +139,7 @@ const dataManager = {
         } catch (error) {
             console.error('Error loading gallery:', error);
             if (gallery) {
-                gallery.innerHTML = '<p class="error">Error loading gallery data.</p>';
+                gallery.innerHTML = '<p class="error">Error loading gallery data. Make sure you are running the server with <code>node server.js</code>.</p>';
             }
         }
     }
