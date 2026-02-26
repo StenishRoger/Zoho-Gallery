@@ -135,6 +135,8 @@ const dataManager = {
             state.baseUrl = data.baseUrl;
             state.allItems = this.deduplicateItems(data.images || []);
 
+            // Rebuild filter tabs to include any custom types from data
+            filterTabs.rebuild();
             galleryRenderer.render();
         } catch (error) {
             console.error('Error loading gallery:', error);
@@ -381,11 +383,28 @@ const modalManager = {
         if (this.elements.video) {
             this.elements.video.classList.add('hidden');
             this.elements.video.pause();
+            this.elements.video.src = '';
         }
 
+        // Reset image and show it
         this.elements.image.classList.remove('hidden');
-        this.elements.image.src = url;
-        this.elements.image.alt = title;
+        this.elements.image.src = '';
+        // Force reload by setting src after a brief delay
+        requestAnimationFrame(() => {
+            this.elements.image.src = url;
+            this.elements.image.alt = title;
+            
+            // Handle image load errors
+            this.elements.image.onerror = () => {
+                console.error('Failed to load image:', url);
+                this.elements.image.alt = 'Failed to load image';
+            };
+            
+            // Handle successful load
+            this.elements.image.onload = () => {
+                this.elements.image.style.display = 'block';
+            };
+        });
     },
 
     close() {
@@ -730,6 +749,7 @@ const deleteManager = {
                     i => utils.normalizeSrc(i.src) !== normalizedSrc
                 );
                 state.lastRenderedKey = '';   // invalidate render cache
+                filterTabs.rebuild();   // update tabs in case a custom type was removed
                 galleryRenderer.render();
             }, 300);
         } catch (err) {
@@ -782,6 +802,8 @@ const uploadManager = {
             titleInput: document.getElementById('uploadTitle'),
             typeValue: document.getElementById('uploadTypeValue'),
             typeOptions: document.querySelectorAll('.type-option'),
+            customTypeWrapper: document.getElementById('customTypeWrapper'),
+            customTypeInput: document.getElementById('customTypeInput'),
             previewContainer: document.getElementById('uploadPreviewContainer'),
             previewImg: document.getElementById('uploadPreviewImg'),
             previewVid: document.getElementById('uploadPreviewVid'),
@@ -847,6 +869,8 @@ const uploadManager = {
         this.selectedType = null;
         this.elements.typeValue.value = '';
         this.elements.typeOptions.forEach(btn => btn.classList.remove('selected'));
+        this.elements.customTypeWrapper.classList.add('hidden');
+        this.elements.customTypeInput.value = '';
         this.elements.previewContainer.classList.add('hidden');
         this.elements.previewImg.classList.add('hidden');
         this.elements.previewVid.classList.add('hidden');
@@ -859,8 +883,20 @@ const uploadManager = {
     selectType(btn) {
         this.elements.typeOptions.forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
-        this.selectedType = btn.dataset.type;
-        this.elements.typeValue.value = this.selectedType;
+
+        if (btn.dataset.type === 'custom') {
+            // Show custom type input
+            this.elements.customTypeWrapper.classList.remove('hidden');
+            this.selectedType = null;
+            this.elements.typeValue.value = '';
+            setTimeout(() => this.elements.customTypeInput.focus(), 100);
+        } else {
+            // Normal predefined type
+            this.elements.customTypeWrapper.classList.add('hidden');
+            this.elements.customTypeInput.value = '';
+            this.selectedType = btn.dataset.type;
+            this.elements.typeValue.value = this.selectedType;
+        }
         this.updatePreview();
     },
 
@@ -905,7 +941,18 @@ const uploadManager = {
     async submit() {
         const src = this.elements.srcInput.value.trim();
         const title = this.elements.titleInput.value.trim();
-        const type = this.selectedType;
+
+        // Resolve type: use custom input if "Custom" was selected
+        let type = this.selectedType;
+        const isCustom = document.querySelector('.type-option[data-type="custom"]')?.classList.contains('selected');
+        if (isCustom) {
+            const customVal = this.elements.customTypeInput.value.trim().toLowerCase();
+            if (!customVal) {
+                this.showStatus('Please enter a custom type name.', true);
+                return;
+            }
+            type = customVal;
+        }
 
         // Validate
         if (!src) {
@@ -932,6 +979,9 @@ const uploadManager = {
             // Also add to in-memory state and re-render (prepend to beginning)
             state.allItems.unshift(newItem);
             state.lastRenderedKey = '';   // invalidate render cache
+
+            // Rebuild filter tabs to include the new type (if custom)
+            filterTabs.rebuild();
             galleryRenderer.render();
 
             this.showStatus('Asset added to gallery successfully!');
@@ -951,16 +1001,76 @@ const uploadManager = {
 // ============================================================================
 
 const filterTabs = {
+    // Predefined types with icons (SVG markup)
+    predefinedIcons: {
+        all: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>',
+        illustration: '<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>',
+        screenshot: '<rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>',
+        video: '<polygon points="5 3 19 12 5 21 5 3"/>'
+    },
+
+    // Generic icon for custom types
+    customIcon: '<circle cx="12" cy="12" r="3"/><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/><path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/>',
+
     init() {
+        this.bindTabs();
+    },
+
+    bindTabs() {
         const tabs = document.querySelectorAll('.filter-tab');
-        
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
                 galleryRenderer.render();
             });
         });
+    },
+
+    /** Rebuild filter tabs from all unique types in state.allItems */
+    rebuild() {
+        const container = document.querySelector('.filter-tabs');
+        if (!container) return;
+
+        // Preserve current active filter
+        const currentFilter = filterManager.getActiveFilter();
+
+        // Collect unique types from data (preserve order of first appearance)
+        const predefined = ['illustration', 'screenshot', 'video'];
+        const uniqueTypes = [];
+        state.allItems.forEach(item => {
+            const t = item.type?.toLowerCase();
+            if (t && !uniqueTypes.includes(t)) uniqueTypes.push(t);
+        });
+
+        // Split into predefined and custom
+        const orderedTypes = predefined.filter(t => uniqueTypes.includes(t));
+        const customTypes = uniqueTypes.filter(t => !predefined.includes(t));
+
+        // Build HTML
+        let html = this._makeTabHTML('all', 'All', this.predefinedIcons.all, currentFilter === 'all');
+
+        orderedTypes.forEach(type => {
+            const label = type.charAt(0).toUpperCase() + type.slice(1) + (type === 'video' ? 's' : 's');
+            html += this._makeTabHTML(type, label, this.predefinedIcons[type], currentFilter === type);
+        });
+
+        customTypes.forEach(type => {
+            const label = type.charAt(0).toUpperCase() + type.slice(1);
+            html += this._makeTabHTML(type, label, this.customIcon, currentFilter === type);
+        });
+
+        container.innerHTML = html;
+        this.bindTabs();
+    },
+
+    _makeTabHTML(filter, label, svgInner, isActive) {
+        return `<button class="filter-tab${isActive ? ' active' : ''}" data-filter="${filter}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        ${svgInner}
+                    </svg>
+                    ${label}
+                </button>`;
     }
 };
 
